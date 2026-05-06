@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>AI Spend Dashboard</title>
 
     <!-- Google Font -->
@@ -40,7 +41,9 @@
 
         <div class="top-actions">
           <button class="theme-toggle">🌙</button>
+
           <button class="upgrade-btn">Upgrade Plan</button>
+
           <div class="profile">👤</div>
         </div>
       </header>
@@ -71,69 +74,136 @@
       <section class="audit-form-section">
         <div class="form-header">
           <h2>AI Spend Audit</h2>
+
           <p>Analyze your current AI tool expenses</p>
         </div>
 
         <form id="auditForm">
-          <div class="form-grid">
-            <div class="form-group">
-              <label>AI Tool</label>
+          <!-- Multiple Tools Container -->
+          <div id="toolsContainer">
+            <!-- Tool Entry -->
+            <div class="form-grid tool-entry">
+              <div class="form-group">
+                <label>AI Tool</label>
 
-              <select id="tool">
-                <option value="ChatGPT">ChatGPT</option>
-                <option value="Claude">Claude</option>
-                <option value="Cursor">Cursor</option>
-                <option value="GitHub Copilot">GitHub Copilot</option>
-                <option value="Gemini">Gemini</option>
-              </select>
-            </div>
+                <select class="tool">
+                  <option value="ChatGPT">ChatGPT</option>
 
-            <div class="form-group">
-              <label>Plan</label>
+                  <option value="Claude">Claude</option>
 
-              <select id="plan">
-                <option value="Free">Free</option>
-                <option value="Pro">Pro</option>
-                <option value="Team">Team</option>
-                <option value="Enterprise">Enterprise</option>
-              </select>
-            </div>
+                  <option value="Cursor">Cursor</option>
 
-            <div class="form-group">
-              <label>Monthly Spend ($)</label>
+                  <option value="GitHub Copilot">GitHub Copilot</option>
 
-              <input
-                type="number"
-                id="spend"
-                placeholder="Enter monthly spend"
-              />
-            </div>
+                  <option value="Gemini">Gemini</option>
+                </select>
+              </div>
 
-            <div class="form-group">
-              <label>Team Size</label>
+              <div class="form-group">
+                <label>Plan</label>
 
-              <input
-                type="number"
-                id="teamSize"
-                placeholder="Enter team size"
-              />
-            </div>
+                <select class="plan">
+                  <option value="Free">Free</option>
 
-            <div class="form-group">
-              <label>Primary Use Case</label>
+                  <option value="Pro">Pro</option>
 
-              <select id="useCase">
-                <option value="Coding">Coding</option>
-                <option value="Writing">Writing</option>
-                <option value="Research">Research</option>
-                <option value="Data Analysis">Data Analysis</option>
-                <option value="Mixed">Mixed</option>
-              </select>
+                  <option value="Team">Team</option>
+
+                  <option value="Enterprise">Enterprise</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Monthly Spend ($)</label>
+
+                <input
+                  type="number"
+                  class="spend"
+                  placeholder="Enter monthly spend"
+                />
+              </div>
+
+              <div class="form-group">
+                <label>Team Size</label>
+
+                <input
+                  type="number"
+                  class="teamSize"
+                  placeholder="Enter team size"
+                />
+              </div>
+
+              <div class="form-group">
+                <label>Primary Use Case</label>
+
+                <select class="useCase">
+                  <option value="Coding">Coding</option>
+
+                  <option value="Writing">Writing</option>
+
+                  <option value="Research">Research</option>
+
+                  <option value="Data Analysis">Data Analysis</option>
+
+                  <option value="Mixed">Mixed</option>
+                </select>
+              </div>
             </div>
           </div>
 
+          <!-- Add Tool Button -->
+          <button type="button" class="add-tool-btn" id="addToolBtn">
+            + Add Another Tool
+          </button>
+
+          <!-- Generate Audit -->
           <button type="submit" class="audit-btn">Generate Audit</button>
         </form>
+
+        <!-- Audit Results -->
+        <div id="auditResult" class="audit-result"></div>
+      </section>
+      <div class="share-section">
+        <button id="shareBtn" class="share-btn">🔗 Share Audit Report</button>
+
+        <p id="shareMessage"></p>
+      </div>
+
+      <!-- Lead Capture -->
+
+      <section class="lead-section">
+        <h2>Save Your Audit Report</h2>
+
+        <p>Get your personalized AI savings report delivered to your inbox.</p>
+
+        <form id="leadForm">
+          <div class="lead-grid">
+            <input
+              type="email"
+              id="email"
+              placeholder="Email Address"
+              required
+            />
+
+            <input
+              type="text"
+              id="company"
+              placeholder="Company Name (Optional)"
+            />
+
+            <input type="text" id="role" placeholder="Your Role (Optional)" />
+
+            <input
+              type="number"
+              id="leadTeamSize"
+              placeholder="Team Size (Optional)"
+            />
+          </div>
+
+          <button type="submit" class="save-report-btn">Save My Report</button>
+        </form>
+
+        <div id="leadMessage"></div>
       </section>
 
       <!-- Stats Cards -->
@@ -158,6 +228,7 @@
       <section class="chart-section">
         <div class="chart-header">
           <h2>AI Spending Analytics</h2>
+
           <p>Last 6 Months Overview</p>
         </div>
 
@@ -236,11 +307,6 @@
       </section>
     </main>
 
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- JavaScript -->
-    <script src="script.js"></script>
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 

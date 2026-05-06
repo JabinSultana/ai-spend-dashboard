@@ -1,32 +1,327 @@
-const ctx = document.getElementById("spendChart");
+const auditForm = document.getElementById("auditForm");
+const auditResult = document.getElementById("auditResult");
+const toolsContainer = document.getElementById("toolsContainer");
+const addToolBtn = document.getElementById("addToolBtn");
+/* Auto Save Form Data */
+
+function saveFormState() {
+  const toolEntries = document.querySelectorAll(".tool-entry");
+
+  const formData = [];
+
+  toolEntries.forEach((entry) => {
+    formData.push({
+      tool: entry.querySelector(".tool").value,
+
+      plan: entry.querySelector(".plan").value,
+
+      spend: entry.querySelector(".spend").value,
+
+      teamSize: entry.querySelector(".teamSize").value,
+
+      useCase: entry.querySelector(".useCase").value,
+    });
+  });
+
+  localStorage.setItem("auditFormData", JSON.stringify(formData));
+}
+
+/* Add New Tool */
+
+addToolBtn.addEventListener("click", () => {
+  const toolEntry = document.createElement("div");
+
+  toolEntry.classList.add("form-grid", "tool-entry");
+
+  toolEntry.innerHTML = `
+    <div class="form-group">
+      <label>AI Tool</label>
+
+      <select class="tool">
+        <option value="ChatGPT">ChatGPT</option>
+        <option value="Claude">Claude</option>
+        <option value="Cursor">Cursor</option>
+        <option value="GitHub Copilot">
+          GitHub Copilot
+        </option>
+        <option value="Gemini">Gemini</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Plan</label>
+
+      <select class="plan">
+        <option value="Free">Free</option>
+        <option value="Pro">Pro</option>
+        <option value="Team">Team</option>
+        <option value="Enterprise">
+          Enterprise
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Monthly Spend ($)</label>
+
+      <input
+        type="number"
+        class="spend"
+        placeholder="Enter monthly spend"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Team Size</label>
+
+      <input
+        type="number"
+        class="teamSize"
+        placeholder="Enter team size"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Primary Use Case</label>
+
+      <select class="useCase">
+        <option value="Coding">Coding</option>
+        <option value="Writing">Writing</option>
+        <option value="Research">Research</option>
+        <option value="Data Analysis">
+          Data Analysis
+        </option>
+        <option value="Mixed">Mixed</option>
+      </select>
+    </div>
+  `;
+
+  toolsContainer.appendChild(toolEntry);
+});
+/* Save Form On Change */
+
+document.addEventListener("input", () => {
+  saveFormState();
+});
+
+document.addEventListener("change", () => {
+  saveFormState();
+});
+
+/* Audit Engine */
+
+auditForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const toolEntries = document.querySelectorAll(".tool-entry");
+
+  let totalSavings = 0;
+  let resultsHTML = "";
+
+  toolEntries.forEach((entry) => {
+    const tool = entry.querySelector(".tool").value;
+
+    const plan = entry.querySelector(".plan").value;
+
+    const spend = Number(entry.querySelector(".spend").value);
+
+    const teamSize = Number(entry.querySelector(".teamSize").value);
+
+    const useCase = entry.querySelector(".useCase").value;
+
+    let recommendation = "";
+    let savings = 0;
+
+    /* ChatGPT */
+
+    if (tool === "ChatGPT" && plan === "Team" && teamSize <= 2) {
+      recommendation = "Switch from Team to Plus plan for small teams.";
+
+      savings = spend * 0.4;
+    } else if (tool === "Claude" && spend > 40) {
+      /* Claude */
+      recommendation =
+        "Claude usage appears high. Consider optimizing API usage or switching plans.";
+
+      savings = spend * 0.25;
+    } else if (tool === "Cursor" && teamSize === 1 && plan === "Business") {
+      /* Cursor */
+      recommendation = "Cursor Business is unnecessary for solo developers.";
+
+      savings = spend * 0.5;
+    } else if (
+      /* GitHub Copilot */
+      tool === "GitHub Copilot" &&
+      plan === "Enterprise" &&
+      teamSize < 5
+    ) {
+      recommendation =
+        "GitHub Copilot Enterprise may be excessive for smaller teams.";
+
+      savings = spend * 0.35;
+    } else if (tool === "Gemini" && spend > 30) {
+      /* Gemini */
+      recommendation = "Gemini usage could be optimized with lower-cost plans.";
+
+      savings = spend * 0.2;
+    } else {
+      /* Optimized */
+      recommendation =
+        "Your current AI spending setup appears reasonably optimized with no major inefficiencies detected.";
+
+      savings = 0;
+    }
+
+    /* Smart Logic */
+
+    if (plan === "Team" && teamSize <= 2) {
+      recommendation = "Small teams may not need Team plans. Consider Pro.";
+
+      savings = spend * 0.3;
+    }
+
+    if (plan === "Enterprise" && teamSize <= 5) {
+      recommendation = "Enterprise may be unnecessary for smaller teams.";
+
+      savings = spend * 0.5;
+    }
+
+    if (useCase === "Coding" && tool === "ChatGPT") {
+      recommendation =
+        "Cursor or GitHub Copilot may provide better coding value.";
+
+      savings = spend * 0.2;
+    }
+
+    if (spend > 500) {
+      recommendation =
+        "High monthly spend detected. Consider consolidating tools.";
+
+      savings = spend * 0.25;
+    }
+
+    totalSavings += savings;
+
+    resultsHTML += `
+      <div class="result-card">
+
+        <h3>${tool}</h3>
+
+        <p>
+          <strong>Recommendation:</strong>
+          ${recommendation}
+        </p>
+
+        <p>
+          <strong>Estimated Savings:</strong>
+          $${savings.toFixed(2)}/month
+        </p>
+
+      </div>
+    `;
+  });
+
+  const annualSavings = totalSavings * 12;
+  let ctaMessage = "";
+
+  if (totalSavings >= 500) {
+    ctaMessage = `
+    <div class="cta-box high-savings">
+
+      <h2>
+        🚀 You Could Save Big With Credex
+      </h2>
+
+      <p>
+        Your audit shows significant AI overspending.
+        Credex can help optimize your AI infrastructure
+        and unlock even more savings.
+      </p>
+
+      <button class="cta-btn">
+        Book Credex Consultation
+      </button>
+
+    </div>
+  `;
+  } else if (totalSavings < 100) {
+    ctaMessage = `
+    <div class="cta-box optimized">
+
+      <h2>
+        ✅ Your AI Spending Looks Healthy
+      </h2>
+
+      <p>
+        No major inefficiencies were detected.
+        Stay updated when new optimization
+        opportunities become available.
+      </p>
+
+      <button class="cta-btn">
+        Notify Me Later
+      </button>
+
+    </div>
+  `;
+  } else {
+    ctaMessage = `
+    <div class="cta-box medium-savings">
+
+      <h2>
+        💡 Moderate Savings Opportunity
+      </h2>
+
+      <p>
+        Your stack has some optimization potential.
+        Small changes could reduce monthly AI costs.
+      </p>
+
+      <button class="cta-btn">
+        Explore Recommendations
+      </button>
+
+    </div>
+  `;
+  }
+
+  auditResult.innerHTML = `
+    <div class="total-savings">
+
+      <h2>Total Potential Savings</h2>
+
+      <h1>$${totalSavings.toFixed(2)}/month</h1>
+
+      <h3>
+        $${annualSavings.toFixed(2)}/year
+      </h3>
+
+    </div>
+    ${ctaMessage}
+    ${resultsHTML}
+  `;
+});
+const ctx = document.getElementById("spendChart").getContext("2d");
 
 new Chart(ctx, {
   type: "line",
 
   data: {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
 
     datasets: [
       {
-        label: "AI Spending",
+        label: "AI Spend ($)",
 
-        data: [4000, 6500, 8000, 7200, 9500, 12500],
+        data: [400, 650, 800, 950, 1200, 1500],
 
         borderColor: "#38bdf8",
 
         backgroundColor: "rgba(56, 189, 248, 0.2)",
 
-        fill: true,
-
         tension: 0.4,
 
-        borderWidth: 3,
-
-        pointBackgroundColor: "#ffffff",
-
-        pointBorderColor: "#38bdf8",
-
-        pointRadius: 5,
+        fill: true,
       },
     ],
   },
@@ -43,7 +338,7 @@ new Chart(ctx, {
     },
 
     scales: {
-      x: {
+      y: {
         ticks: {
           color: "#cbd5e1",
         },
@@ -53,7 +348,7 @@ new Chart(ctx, {
         },
       },
 
-      y: {
+      x: {
         ticks: {
           color: "#cbd5e1",
         },
@@ -65,186 +360,192 @@ new Chart(ctx, {
     },
   },
 });
-// Sidebar Active Menu
+/* Lead Capture */
 
-const menuItems = document.querySelectorAll(".menu li");
+const leadForm = document.getElementById("leadForm");
 
-menuItems.forEach((item) => {
-  item.addEventListener("click", () => {
-    menuItems.forEach((li) => {
-      li.classList.remove("active");
-    });
+const leadMessage = document.getElementById("leadMessage");
 
-    item.classList.add("active");
-  });
-});
-// Upgrade Button
-
-const upgradeBtn = document.querySelector(".upgrade-btn");
-
-upgradeBtn.addEventListener("click", () => {
-  alert("Upgrade feature coming soon 🚀");
-});
-// Profile Button
-
-const profile = document.querySelector(".profile");
-
-profile.addEventListener("click", () => {
-  alert("Admin Profile Panel 👤");
-});
-// Detailed Report Button
-
-const reportBtn = document.querySelector(".details-btn");
-
-reportBtn.addEventListener("click", () => {
-  alert("Detailed AI Spending Report Generated 📊");
-});
-// Theme Toggle
-
-const themeToggle = document.querySelector(".theme-toggle");
-
-themeToggle.addEventListener("click", () => {
-  document.body.classList.toggle("light-mode");
-
-  if (document.body.classList.contains("light-mode")) {
-    themeToggle.innerHTML = "☀️";
-  } else {
-    themeToggle.innerHTML = "🌙";
-  }
-});
-
-// =========================
-// AI Spend Audit Logic
-// =========================
-
-const auditForm = document.getElementById("auditForm");
-
-auditForm.addEventListener("submit", function (e) {
+leadForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  // Get Values
-  const tool = document.getElementById("tool").value;
-  const plan = document.getElementById("plan").value;
-  const spend = document.getElementById("spend").value;
-  const teamSize = document.getElementById("teamSize").value;
-  const useCase = document.getElementById("useCase").value;
+  const email = document.getElementById("email").value;
 
-  // Save to localStorage
-  const auditData = {
-    tool,
-    plan,
-    spend,
-    teamSize,
-    useCase,
+  const company = document.getElementById("company").value;
+
+  const role = document.getElementById("role").value;
+
+  const leadTeamSize = document.getElementById("leadTeamSize").value;
+
+  /* Save to Local Storage */
+
+  const leadData = {
+    email,
+    company,
+    role,
+    leadTeamSize,
   };
 
-  localStorage.setItem("auditData", JSON.stringify(auditData));
+  localStorage.setItem("leadData", JSON.stringify(leadData));
 
-  // =========================
-  // Smarter Audit Logic
-  // =========================
+  leadMessage.innerHTML = "✅ Report saved successfully!";
 
-  let recommendation = "";
-  let savings = 0;
-
-  // Team plan overkill
-  if (plan === "Team" && teamSize <= 2) {
-    recommendation =
-      "Your team size is very small for a Team plan. Downgrading to a Pro plan may reduce unnecessary spending.";
-
-    savings = spend * 0.35;
-  }
-
-  // Enterprise overkill
-  else if (plan === "Enterprise" && teamSize < 10) {
-    recommendation =
-      "Enterprise plans are usually optimized for larger organizations. A lower-tier plan may provide better cost efficiency.";
-
-    savings = spend * 0.4;
-  }
-
-  // Coding use case
-  else if (tool === "ChatGPT" && useCase === "Coding") {
-    recommendation =
-      "Developer-focused tools like Cursor or GitHub Copilot may offer better coding productivity for lower cost.";
-
-    savings = spend * 0.25;
-  }
-
-  // Writing use case
-  else if (tool === "Cursor" && useCase === "Writing") {
-    recommendation =
-      "Cursor is optimized for coding workflows. A writing-focused AI tool could reduce costs while improving fit.";
-
-    savings = spend * 0.2;
-  }
-
-  // High spend detection
-  else if (spend > 500) {
-    recommendation =
-      "Your monthly AI spending is relatively high. Consolidating overlapping tools may significantly reduce expenses.";
-
-    savings = spend * 0.15;
-  }
-
-  // Optimized case
-  else {
-    recommendation =
-      "Your current AI spending setup appears reasonably optimized with no major inefficiencies detected.";
-
-    savings = 0;
-  }
-
-  // Display Result
-  displayAuditResult(tool, recommendation, savings);
+  leadForm.reset();
 });
 
-// =========================
-// Display Audit Result
-// =========================
+/* Restore Saved Form Data */
 
-function displayAuditResult(tool, recommendation, savings) {
-  let existingResult = document.querySelector(".audit-result");
+window.addEventListener("DOMContentLoaded", () => {
+  const savedData = JSON.parse(localStorage.getItem("auditFormData"));
 
-  if (existingResult) {
-    existingResult.remove();
+  if (!savedData || savedData.length === 0) return;
+
+  toolsContainer.innerHTML = "";
+
+  savedData.forEach((item) => {
+    const toolHTML = `
+      <div class="form-grid tool-entry">
+
+        <div class="form-group">
+          <label>AI Tool</label>
+
+          <select class="tool">
+            <option value="ChatGPT"
+              ${item.tool === "ChatGPT" ? "selected" : ""}>
+              ChatGPT
+            </option>
+
+            <option value="Claude"
+              ${item.tool === "Claude" ? "selected" : ""}>
+              Claude
+            </option>
+
+            <option value="Cursor"
+              ${item.tool === "Cursor" ? "selected" : ""}>
+              Cursor
+            </option>
+
+            <option value="GitHub Copilot"
+              ${item.tool === "GitHub Copilot" ? "selected" : ""}>
+              GitHub Copilot
+            </option>
+
+            <option value="Gemini"
+              ${item.tool === "Gemini" ? "selected" : ""}>
+              Gemini
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Plan</label>
+
+          <select class="plan">
+            <option value="Free"
+              ${item.plan === "Free" ? "selected" : ""}>
+              Free
+            </option>
+
+            <option value="Pro"
+              ${item.plan === "Pro" ? "selected" : ""}>
+              Pro
+            </option>
+
+            <option value="Team"
+              ${item.plan === "Team" ? "selected" : ""}>
+              Team
+            </option>
+
+            <option value="Enterprise"
+              ${item.plan === "Enterprise" ? "selected" : ""}>
+              Enterprise
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Monthly Spend ($)</label>
+
+          <input
+            type="number"
+            class="spend"
+            value="${item.spend}"
+            placeholder="Enter monthly spend"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Team Size</label>
+
+          <input
+            type="number"
+            class="teamSize"
+            value="${item.teamSize}"
+            placeholder="Enter team size"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Primary Use Case</label>
+
+          <select class="useCase">
+
+            <option value="Coding"
+              ${item.useCase === "Coding" ? "selected" : ""}>
+              Coding
+            </option>
+
+            <option value="Writing"
+              ${item.useCase === "Writing" ? "selected" : ""}>
+              Writing
+            </option>
+
+            <option value="Research"
+              ${item.useCase === "Research" ? "selected" : ""}>
+              Research
+            </option>
+
+            <option value="Data Analysis"
+              ${item.useCase === "Data Analysis" ? "selected" : ""}>
+              Data Analysis
+            </option>
+
+            <option value="Mixed"
+              ${item.useCase === "Mixed" ? "selected" : ""}>
+              Mixed
+            </option>
+
+          </select>
+        </div>
+
+      </div>
+    `;
+
+    toolsContainer.innerHTML += toolHTML;
+  });
+});
+/* Share Audit Report */
+
+const shareBtn = document.getElementById("shareBtn");
+
+const shareMessage = document.getElementById("shareMessage");
+
+shareBtn.addEventListener("click", () => {
+  const auditData = localStorage.getItem("auditFormData");
+
+  if (!auditData) {
+    shareMessage.innerHTML = "⚠ Generate an audit first.";
+
+    return;
   }
 
-  const resultDiv = document.createElement("div");
+  /* Create fake shareable URL */
 
-  resultDiv.classList.add("audit-result");
+  const shareId = Math.random().toString(36).substring(2, 10);
 
-  resultDiv.innerHTML = `
-    <h2>Audit Result</h2>
+  const shareURL = `${window.location.origin}${window.location.pathname}?report=${shareId}`;
 
-    <p><strong>Tool:</strong> ${tool}</p>
+  navigator.clipboard.writeText(shareURL);
 
-    <p><strong>Recommendation:</strong> ${recommendation}</p>
-
-    <p><strong>Estimated Savings:</strong> $${savings.toFixed(2)}/month</p>
-  `;
-
-  document.querySelector(".audit-form-section").appendChild(resultDiv);
-}
-
-// =========================
-// Load Saved Data
-// =========================
-
-window.addEventListener("load", () => {
-  const savedData = localStorage.getItem("auditData");
-
-  if (savedData) {
-    const auditData = JSON.parse(savedData);
-
-    document.getElementById("tool").value = auditData.tool;
-
-    document.getElementById("plan").value = auditData.plan;
-
-    document.getElementById("spend").value = auditData.spend;
-
-    document.getElementById("teamSize").value = auditData.teamSize;
-
-    document.getElementById("useCase").value = auditData.useCase;
-  }
+  shareMessage.innerHTML = "✅ Shareable report link copied!";
 });

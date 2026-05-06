@@ -58,3 +58,11 @@ NOT used for:
 - core audit logic
 - pricing calculations
 - financial decision rules
+
+---
+
+## 5. Why AI Was Limited
+
+I intentionally limited AI usage to summarization and UX-related tasks instead of financial calculations. Audit recommendations and savings calculations were implemented using deterministic logic because financial recommendations should remain explainable, predictable, and testable.
+
+This decision reduced hallucination risk and made the audit engine easier to validate during testing.

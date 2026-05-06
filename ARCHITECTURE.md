@@ -1,5 +1,26 @@
 # Architecture
 
+## System Diagram
+
+```mermaid
+flowchart TD
+
+A[User Opens Dashboard]
+--> B[AI Spend Audit Form]
+
+B --> C[Audit Logic Engine]
+
+C --> D[Recommendation Generator]
+
+D --> E[Savings Calculation]
+
+E --> F[Dynamic Result Rendering]
+
+F --> G[Shareable Audit Flow]
+
+F --> H[localStorage Persistence]
+```
+
 ## Current Stack
 
 Frontend:

@@ -1,5 +1,7 @@
 # Pricing Data Sources
 
+Pricing data was manually verified using official vendor pricing pages during the submission week. Pricing may change over time.
+
 All pricing data used in the audit engine is sourced from official vendor pricing pages and verified manually.
 
 ---

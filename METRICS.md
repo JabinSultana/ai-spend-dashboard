@@ -37,6 +37,13 @@ Indicates virality and usefulness of the audit reports.
 
 ---
 
+### 4. Consultation Conversion Rate
+
+Percentage of high-savings users who click the consultation CTA or book a call.
+
+Reason:
+Measures whether the audit results are persuasive enough to generate qualified business leads.
+
 ## First Instrumentation Priorities
 
 The first analytics events to track would be:
@@ -52,3 +59,14 @@ The first analytics events to track would be:
 ## Pivot Threshold
 
 If audit completion rate remains below 25% after significant UX improvements, the onboarding flow or audit complexity should be reconsidered.
+
+---
+
+## Future Metrics
+
+Additional future metrics may include:
+
+- Recommendation acceptance rate
+- Repeat audit usage
+- Time-to-complete audit
+- Consultation booking conversion
