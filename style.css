@@ -4,7 +4,10 @@
   box-sizing: border-box;
 }
 
+/* Body */
+
 body {
+  animation: fadeIn 1s ease;
   display: flex;
   min-height: 100vh;
   font-family: "Poppins", sans-serif;
@@ -42,8 +45,11 @@ body {
 
 .menu li:hover,
 .menu .active {
-  background: #1e293b;
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+
   color: white;
+
+  transform: translateX(5px);
 }
 
 /* Main Content */
@@ -102,17 +108,67 @@ body {
 .upgrade-btn:hover {
   background: #6d28d9;
 }
+/* Theme Toggle */
 
+.theme-toggle {
+  width: 45px;
+  height: 45px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: #1e293b;
+
+  color: white;
+
+  cursor: pointer;
+
+  font-size: 18px;
+
+  transition: 0.3s;
+}
+
+.theme-toggle:hover {
+  transform: rotate(180deg);
+
+  background: #7c3aed;
+}
 /* Hero Card */
 
 .hero-card {
+  position: relative;
+  overflow: hidden;
+
   background: linear-gradient(135deg, #7c3aed, #4f46e5);
+
   border-radius: 24px;
+
   padding: 35px;
+
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
+
   margin-bottom: 30px;
+}
+
+.hero-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 250px;
+  height: 250px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  border-radius: 50%;
+
+  top: -80px;
+  right: -80px;
 }
 
 .hero-left h2 {
@@ -173,16 +229,18 @@ body {
 
 .card {
   flex: 1;
-  background: rgba(30, 41, 59, 0.9);
-  padding: 25px;
-  border-radius: 20px;
-  transition: 0.3s;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
 
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  background: rgba(30, 41, 59, 0.65);
+
+  backdrop-filter: blur(12px);
+
+  padding: 25px;
+
+  border-radius: 20px;
+
+  transition: 0.3s;
+
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .card h3 {
@@ -195,21 +253,35 @@ body {
   color: #94a3b8;
 }
 
-/* Bottom Section */
+/* Chart Section */
 
-.bottom-section {
-  display: flex;
-  gap: 20px;
+.chart-section {
+  background: rgba(30, 41, 59, 0.9);
+
+  padding: 25px;
+
+  border-radius: 24px;
+
+  margin-bottom: 30px;
+
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Insights */
+.chart-header {
+  margin-bottom: 20px;
+}
 
-.insight {
-  background: #111827;
-  padding: 14px;
-  border-radius: 12px;
-  margin-bottom: 14px;
-  color: #cbd5e1;
+.chart-header h2 {
+  margin-bottom: 6px;
+}
+
+.chart-header p {
+  color: #94a3b8;
+}
+
+.chart-section canvas {
+  width: 100% !important;
+  height: 320px !important;
 }
 
 /* Progress Section */
@@ -222,9 +294,15 @@ body {
 
 .progress-card {
   flex: 1;
-  background: rgba(30, 41, 59, 0.9);
+
+  background: rgba(30, 41, 59, 0.65);
+
+  backdrop-filter: blur(12px);
+
   padding: 22px;
+
   border-radius: 20px;
+
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -261,13 +339,45 @@ body {
 .progress-fill.second {
   width: 60%;
 }
+
+/* Bottom Section */
+
+.bottom-section {
+  display: flex;
+  gap: 20px;
+}
+
+/* Activity & Insights */
+
+.activity-box,
+.insight-box {
+  flex: 1;
+
+  background: rgba(30, 41, 59, 0.65);
+
+  backdrop-filter: blur(12px);
+
+  padding: 25px;
+
+  border-radius: 20px;
+}
+
+.activity-box h2,
+.insight-box h2 {
+  margin-bottom: 20px;
+}
+
 /* Activity */
 
 .activity-item {
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
+
   padding: 18px 0;
+
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -284,6 +394,21 @@ body {
   color: #38bdf8;
   font-weight: 600;
 }
+
+/* Insights */
+
+.insight {
+  background: #111827;
+
+  padding: 14px;
+
+  border-radius: 12px;
+
+  margin-bottom: 14px;
+
+  color: #cbd5e1;
+}
+
 /* Hover Effects */
 
 .card,
@@ -298,40 +423,14 @@ body {
 .progress-card:hover,
 .activity-box:hover,
 .insight-box:hover {
-  transform: translateY(-5px);
-}
-/* Chart Section */
+  transform: translateY(-8px);
 
-.chart-section {
-  background: rgba(30, 41, 59, 0.9);
-  padding: 25px;
-  border-radius: 24px;
-  margin-bottom: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(56, 189, 248, 0.15);
 }
 
-.chart-header {
-  margin-bottom: 20px;
-}
-
-.chart-header h2 {
-  margin-bottom: 6px;
-}
-
-.chart-header p {
-  color: #94a3b8;
-}
-.chart-section canvas {
-  width: 100% !important;
-  height: 320px !important;
-}
-
-#spendChart {
-  width: 100%;
-  height: 320px;
-}
-
-/* Improved Responsive Design */
+/* Responsive */
 
 @media (max-width: 1000px) {
   body {
@@ -358,4 +457,55 @@ body {
   .hero-left h1 {
     font-size: 38px;
   }
+}
+
+/* Page Animation */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Light Mode */
+
+.light-mode {
+  background: linear-gradient(to bottom right, #e2e8f0, #cbd5e1);
+
+  color: #111827;
+}
+
+.light-mode .sidebar {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.light-mode .card,
+.light-mode .progress-card,
+.light-mode .activity-box,
+.light-mode .insight-box,
+.light-mode .chart-section {
+  background: rgba(255, 255, 255, 0.7);
+
+  color: #111827;
+}
+
+.light-mode .menu li {
+  color: #334155;
+}
+
+.light-mode .topbar p,
+.light-mode .card p,
+.light-mode .activity-item p,
+.light-mode .chart-header p {
+  color: #475569;
+}
+
+.light-mode .insight {
+  background: #e2e8f0;
+  color: #111827;
 }

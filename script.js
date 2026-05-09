@@ -65,3 +65,50 @@ new Chart(ctx, {
     },
   },
 });
+// Sidebar Active Menu
+
+const menuItems = document.querySelectorAll(".menu li");
+
+menuItems.forEach((item) => {
+  item.addEventListener("click", () => {
+    menuItems.forEach((li) => {
+      li.classList.remove("active");
+    });
+
+    item.classList.add("active");
+  });
+});
+// Upgrade Button
+
+const upgradeBtn = document.querySelector(".upgrade-btn");
+
+upgradeBtn.addEventListener("click", () => {
+  alert("Upgrade feature coming soon 🚀");
+});
+// Profile Button
+
+const profile = document.querySelector(".profile");
+
+profile.addEventListener("click", () => {
+  alert("Admin Profile Panel 👤");
+});
+// Detailed Report Button
+
+const reportBtn = document.querySelector(".details-btn");
+
+reportBtn.addEventListener("click", () => {
+  alert("Detailed AI Spending Report Generated 📊");
+});
+// Theme Toggle
+
+const themeToggle = document.querySelector(".theme-toggle");
+
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+
+  if (document.body.classList.contains("light-mode")) {
+    themeToggle.innerHTML = "☀️";
+  } else {
+    themeToggle.innerHTML = "🌙";
+  }
+});
