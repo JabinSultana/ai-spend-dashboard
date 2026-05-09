@@ -202,37 +202,6 @@ body {
   gap: 20px;
 }
 
-/* Activity */
-
-.activity-box,
-.insight-box {
-  flex: 1;
-  background: rgba(30, 41, 59, 0.9);
-  padding: 25px;
-  border-radius: 20px;
-}
-
-.activity-box h2,
-.insight-box h2 {
-  margin-bottom: 20px;
-}
-
-.activity-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 14px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.activity-item p {
-  color: #cbd5e1;
-}
-
-.activity-item span {
-  color: #38bdf8;
-  font-weight: 600;
-}
-
 /* Insights */
 
 .insight {
@@ -243,24 +212,6 @@ body {
   color: #cbd5e1;
 }
 
-/* Responsive */
-
-@media (max-width: 1000px) {
-  body {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    height: auto;
-  }
-
-  .cards,
-  .bottom-section,
-  .hero-card {
-    flex-direction: column;
-  }
-}
 /* Progress Section */
 
 .progress-section {
@@ -348,4 +299,63 @@ body {
 .activity-box:hover,
 .insight-box:hover {
   transform: translateY(-5px);
+}
+/* Chart Section */
+
+.chart-section {
+  background: rgba(30, 41, 59, 0.9);
+  padding: 25px;
+  border-radius: 24px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.chart-header {
+  margin-bottom: 20px;
+}
+
+.chart-header h2 {
+  margin-bottom: 6px;
+}
+
+.chart-header p {
+  color: #94a3b8;
+}
+.chart-section canvas {
+  width: 100% !important;
+  height: 320px !important;
+}
+
+#spendChart {
+  width: 100%;
+  height: 320px;
+}
+
+/* Improved Responsive Design */
+
+@media (max-width: 1000px) {
+  body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
+
+  .topbar,
+  .hero-card,
+  .cards,
+  .progress-section,
+  .bottom-section {
+    flex-direction: column;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  .hero-left h1 {
+    font-size: 38px;
+  }
 }

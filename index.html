@@ -21,11 +21,11 @@
       <div class="logo">⚡ AI Spend</div>
 
       <ul class="menu">
-        <li class="active">Dashboard</li>
-        <li>Analytics</li>
-        <li>Usage</li>
-        <li>Reports</li>
-        <li>Settings</li>
+        <li class="active">📊 Dashboard</li>
+        <li>📈 Analytics</li>
+        <li>⚡ Usage</li>
+        <li>📝 Reports</li>
+        <li>⚙ Settings</li>
       </ul>
     </aside>
 
@@ -44,7 +44,7 @@
         </div>
       </header>
 
-      <!-- Big Analytics Card -->
+      <!-- Hero Card -->
       <section class="hero-card">
         <div class="hero-left">
           <h2>Total AI Spending</h2>
@@ -84,6 +84,16 @@
         </div>
       </section>
 
+      <!-- Analytics Chart -->
+      <section class="chart-section">
+        <div class="chart-header">
+          <h2>AI Spending Analytics</h2>
+          <p>Last 6 Months Overview</p>
+        </div>
+
+        <canvas id="spendChart"></canvas>
+      </section>
+
       <!-- Progress Section -->
       <section class="progress-section">
         <div class="progress-card">
@@ -109,38 +119,39 @@
         </div>
       </section>
 
-      <!-- Bottom Layout -->
+      <!-- Bottom Section -->
       <section class="bottom-section">
         <!-- Recent Activity -->
         <div class="activity-box">
           <h2>Recent Activity</h2>
 
           <div class="activity-item">
-  <div>
-    <h4>OpenAI API Usage</h4>
-    <p>Today • 2:30 PM</p>
-  </div>
+            <div>
+              <h4>OpenAI API Usage</h4>
+              <p>Today • 2:30 PM</p>
+            </div>
 
-  <span>₹2,400</span>
-</div>
+            <span>₹2,400</span>
+          </div>
 
-<div class="activity-item">
-  <div>
-    <h4>ChatGPT Team Plan</h4>
-    <p>Yesterday • 11:20 AM</p>
-  </div>
+          <div class="activity-item">
+            <div>
+              <h4>ChatGPT Team Plan</h4>
+              <p>Yesterday • 11:20 AM</p>
+            </div>
 
-  <span>₹1,200</span>
-</div>
+            <span>₹1,200</span>
+          </div>
 
-<div class="activity-item">
-  <div>
-    <h4>Gemini API Requests</h4>
-    <p>Monday • 9:15 PM</p>
-  </div>
+          <div class="activity-item">
+            <div>
+              <h4>Gemini API Requests</h4>
+              <p>Monday • 9:15 PM</p>
+            </div>
 
-  <span>₹850</span>
-</div>
+            <span>₹850</span>
+          </div>
+        </div>
 
         <!-- Insights -->
         <div class="insight-box">
@@ -154,5 +165,16 @@
         </div>
       </section>
     </main>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
   </body>
 </html>
