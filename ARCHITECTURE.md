@@ -26,6 +26,8 @@ User interacts with dashboard features
 ↓
 Theme toggle and interactive components update dynamically
 
+User Input → Audit Logic Engine → Recommendation Generator → Savings Calculation → Dynamic Result Rendering → localStorage Persistence
+
 ## Planned Future Architecture
 
 The application will evolve into a full-stack AI spend auditing platform with:

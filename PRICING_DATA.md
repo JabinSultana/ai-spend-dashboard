@@ -1,6 +1,6 @@
 # Pricing Data Sources
 
-All pricing data used in the audit engine will be verified using official vendor pricing pages.
+All pricing data used in the audit engine is sourced from official vendor pricing pages and verified manually.
 
 ---
 
@@ -10,7 +10,13 @@ Official Pricing:
 https://cursor.com/pricing
 
 Verified:
-2026-05-09
+2026-05-10
+
+Plans:
+
+- Hobby — Free
+- Pro — $20/user/month
+- Business — $40/user/month
 
 ---
 
@@ -20,7 +26,13 @@ Official Pricing:
 https://github.com/features/copilot/plans
 
 Verified:
-2026-05-09
+2026-05-10
+
+Plans:
+
+- Individual — $10/user/month
+- Business — $19/user/month
+- Enterprise — Custom pricing
 
 ---
 
@@ -30,7 +42,14 @@ Official Pricing:
 https://www.anthropic.com/pricing
 
 Verified:
-2026-05-09
+2026-05-10
+
+Plans:
+
+- Free — $0
+- Pro — $20/month
+- Max — Usage-based
+- Team — Custom pricing
 
 ---
 
@@ -40,7 +59,14 @@ Official Pricing:
 https://openai.com/chatgpt/pricing
 
 Verified:
-2026-05-09
+2026-05-10
+
+Plans:
+
+- Free — $0
+- Plus — $20/month
+- Team — $25/user/month billed annually
+- Enterprise — Custom pricing
 
 ---
 
@@ -50,7 +76,11 @@ Official Pricing:
 https://openai.com/api/pricing
 
 Verified:
-2026-05-09
+2026-05-10
+
+Pricing:
+
+- GPT API pricing varies by model and token usage
 
 ---
 
@@ -60,4 +90,9 @@ Official Pricing:
 https://gemini.google.com/pricing
 
 Verified:
-2026-05-09
+2026-05-10
+
+Plans:
+
+- Free — $0
+- Advanced — $20/month

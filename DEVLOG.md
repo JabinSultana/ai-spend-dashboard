@@ -69,3 +69,19 @@ Had issues with Chart.js rendering and script loading initially.
 
 **Plan for tomorrow:**
 Start converting the project into a more scalable architecture and begin implementing real audit logic.
+
+## Day 5 — 2026-05-10
+
+**Hours worked:** 5
+
+**What I did:**  
+Built the first functional version of the AI Spend Audit system. Added a dynamic spend input form with fields for AI tools, plans, spend amount, team size, and use case. Implemented JavaScript logic for generating recommendations and estimated savings. Added localStorage persistence so form data survives page reloads. Improved audit reasoning with smarter conditions for team plans, enterprise overuse, and use-case mismatches. Styled the audit results section to match the SaaS dashboard UI.
+
+**What I learned:**  
+Learned how to manage dynamic DOM updates using JavaScript and how to persist form state using localStorage. Also improved my understanding of conditional business logic and user-focused audit design.
+
+**Blockers / what I'm stuck on:**  
+Need to improve the audit engine further with real pricing-based calculations and support for multiple tools in a single audit.
+
+**Plan for tomorrow:**  
+Add pricing data structures, support multiple AI tools, and start building more realistic audit calculations.

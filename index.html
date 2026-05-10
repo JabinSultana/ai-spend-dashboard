@@ -67,6 +67,75 @@
         </div>
       </section>
 
+      <!-- Spend Audit Form -->
+      <section class="audit-form-section">
+        <div class="form-header">
+          <h2>AI Spend Audit</h2>
+          <p>Analyze your current AI tool expenses</p>
+        </div>
+
+        <form id="auditForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>AI Tool</label>
+
+              <select id="tool">
+                <option value="ChatGPT">ChatGPT</option>
+                <option value="Claude">Claude</option>
+                <option value="Cursor">Cursor</option>
+                <option value="GitHub Copilot">GitHub Copilot</option>
+                <option value="Gemini">Gemini</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Plan</label>
+
+              <select id="plan">
+                <option value="Free">Free</option>
+                <option value="Pro">Pro</option>
+                <option value="Team">Team</option>
+                <option value="Enterprise">Enterprise</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Monthly Spend ($)</label>
+
+              <input
+                type="number"
+                id="spend"
+                placeholder="Enter monthly spend"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Team Size</label>
+
+              <input
+                type="number"
+                id="teamSize"
+                placeholder="Enter team size"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Primary Use Case</label>
+
+              <select id="useCase">
+                <option value="Coding">Coding</option>
+                <option value="Writing">Writing</option>
+                <option value="Research">Research</option>
+                <option value="Data Analysis">Data Analysis</option>
+                <option value="Mixed">Mixed</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="audit-btn">Generate Audit</button>
+        </form>
+      </section>
+
       <!-- Stats Cards -->
       <section class="cards">
         <div class="card">
