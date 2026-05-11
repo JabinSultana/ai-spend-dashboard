@@ -85,4 +85,4 @@ I prioritized a modern dashboard experience because the audit results page is in
 ## Live Demo
 
 Deployed URL:
-[Add deployed URL after deployment]
+https://ai-spend-dashboard-5cjo6cs4h-jabinsultanas-projects.vercel.app/
