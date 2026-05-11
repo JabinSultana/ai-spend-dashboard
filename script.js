@@ -549,3 +549,37 @@ shareBtn.addEventListener("click", () => {
 
   shareMessage.innerHTML = "✅ Shareable report link copied!";
 });
+
+/* =========================
+   TOPBAR BUTTON FEATURES
+========================= */
+
+/* Theme Toggle */
+
+const themeToggle = document.querySelector(".theme-toggle");
+
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+
+  if (document.body.classList.contains("light-mode")) {
+    themeToggle.innerHTML = "☀️";
+  } else {
+    themeToggle.innerHTML = "🌙";
+  }
+});
+
+/* Upgrade Button */
+
+const upgradeBtn = document.querySelector(".upgrade-btn");
+
+upgradeBtn.addEventListener("click", () => {
+  alert("🚀 Upgrade plans and premium analytics are coming soon!");
+});
+
+/* Profile Button */
+
+const profileBtn = document.querySelector(".profile");
+
+profileBtn.addEventListener("click", () => {
+  alert("👤 User profile settings will be available in a future update.");
+});
