@@ -1,0 +1,24 @@
+{
+  "name": "ai-spend-dashboard",
+  "version": "1.0.0",
+  "description": "A free web app that audits AI tool spending for startup founders and engineering managers — finds plan mismatches, recommends cheaper alternatives, and calculates total monthly and annual savings.",
+  "main": "script.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JabinSultana/ai-spend-dashboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/JabinSultana/ai-spend-dashboard/issues"
+  },
+  "homepage": "https://github.com/JabinSultana/ai-spend-dashboard#readme",
+  "devDependencies": {
+    "jest": "^30.4.2"
+  }
+}
