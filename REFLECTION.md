@@ -1,47 +1,69 @@
 # Reflection
 
-## 1. The hardest bug I hit this week
+## 1. The Hardest Bug I Hit This Week
 
-One of the hardest issues I faced was getting the dashboard layout and responsive behavior to work correctly across different screen sizes. Initially, several sections overlapped or stretched incorrectly when resizing the browser. I first thought the issue was caused by incorrect widths, but after debugging with browser developer tools, I realized the real problem was inconsistent flexbox behavior and missing responsive rules. I experimented with flex-wrap, media queries, spacing adjustments, and width constraints until the layout became stable. This taught me the importance of testing UI behavior continuously instead of only focusing on desktop view during development.
+The hardest bug was the AI-generated audit summary showing "undefined" instead of the actual summary text after the audit ran.
 
----
+My first hypothesis was that the `generateSummary` function wasn't being called at all. I added a `console.log` before the function call and confirmed it was being reached. So the function was running — but returning undefined.
 
-## 2. A decision I reversed mid-week
+My second hypothesis was a scoping issue. I checked where I had placed the function in `script.js` and found the real problem: when I first added the function, I accidentally left the body as a comment (`// ... the whole function`) instead of the actual implementation. The function existed but returned nothing, so `summaryText` was undefined and rendered as the string "undefined" in the HTML template.
 
-Originally, I planned to keep the dashboard extremely minimal and static. However, after reviewing modern SaaS dashboard designs and comparing them to my initial layout, I realized the UI lacked engagement and visual clarity. I decided to redesign the dashboard using better spacing, gradients, glassmorphism effects, hover animations, and a more structured hierarchy. Reworking the design took additional time, but the final result looked significantly more professional and visually appealing.
-
----
-
-## 3. What I would build in week 2
-
-If given another week, I would begin transforming the project into a fully functional full-stack application. The first priority would be implementing the real audit engine logic and persistent storage using a backend service like Supabase or Firebase. After that, I would add email capture, AI-generated summaries using an LLM API, public shareable audit URLs, and authentication for saved reports. I would also improve accessibility, add loading states, and optimize performance for mobile users.
+The fix was replacing the placeholder comment with the real function body. After that the summary rendered correctly. The lesson was to always verify that a function actually contains its implementation before debugging the call site.
 
 ---
 
-## 4. How I used AI tools
+## 2. A Decision I Reversed Mid-Week
 
-I used AI tools primarily for learning, debugging assistance, UI improvement suggestions, and understanding better frontend practices. I did not rely on AI to blindly generate the entire project. Instead, I used it as a guide while still making decisions manually and understanding the code before implementing it. One example where AI was wrong was during dashboard layout adjustments — one suggested structure caused broken alignment and missing section containers. I caught the issue by checking the actual HTML hierarchy and manually correcting the layout structure.
+I originally planned to use AI (the Anthropic API) to generate the audit recommendations themselves — not just the summary paragraph, but the actual "switch from Team to Pro" logic.
+
+I reversed this after thinking through what a finance person reviewing the output would think. If the recommendation says "switch to Cursor Pro — estimated saving: $20/month" that number needs to be traceable to a real pricing page. An LLM generating that number could hallucinate it. A finance reviewer who spots one wrong number loses trust in the entire audit.
+
+I switched to deterministic hardcoded rules for all audit logic and reserved the LLM (in this case a templated summary function) only for the narrative paragraph where slight variation is acceptable. This made the audit engine fully testable and every number traceable to PRICING_DATA.md.
 
 ---
 
-## 5. Self-rating
+## 3. What I Would Build in Week 2
 
-### Discipline — 8/10
+First priority: replace localStorage with a real Supabase backend. Right now lead data only lives in the user's browser — if they clear storage, it's gone, and Credex never sees it. A Supabase `leads` table with a simple POST on form submit would fix this in about 2 hours.
 
-I remained consistent with development progress even after missing one day due to illness.
+Second: real shareable URLs. Currently the share button generates a random ID that doesn't actually load anything. The fix is saving each completed audit as a row in a Supabase `audits` table and building a second page (`/audit.html?id=UUID`) that fetches and renders it. This is the viral loop the product depends on.
 
-### Code Quality — 7/10
+Third: live Anthropic API call for the summary with graceful fallback to the current templated version. The fallback already works — adding the real API call on top takes about 30 minutes once you have a key.
 
-The codebase is organized and readable, though there is still room for better scalability and component structure.
+Fourth: transactional email via Resend. When someone submits their email, they should receive a copy of their audit. This closes the loop and makes the lead feel real.
+
+---
+
+## 4. How I Used AI Tools
+
+I used Claude as my primary assistant throughout the week — for debugging, code suggestions, documentation writing, and understanding concepts I hadn't encountered before (like how GitHub Actions CI works, what Jest does, and how to structure a GTM document with real unit economics).
+
+What I trusted AI for: explaining concepts, suggesting code structure, writing markdown documentation, catching bugs I described in plain English.
+
+What I didn't trust AI for: the final audit logic numbers (I cross-checked every pricing figure against official vendor pages myself), and the user interview content (those were real conversations).
+
+One specific time the AI was wrong: early in the week I asked for help restructuring the `addToolBtn` innerHTML and the AI accidentally replaced the tool dropdown with a duplicate plan dropdown. Both selectors had `class="plan"` instead of one being `class="tool"`. The audit engine then read the wrong value for the tool name and all recommendations broke. I caught it by checking the rendered HTML in browser DevTools and noticing two plan dropdowns with no tool dropdown.
+
+---
+
+## 5. Self-Rating
+
+### Discipline — 7/10
+
+I committed on 7 distinct calendar days and maintained daily DEVLOG entries. I lost one day to illness which broke momentum mid-week and forced me to compress more work into the final two days than I wanted.
+
+### Code Quality — 6/10
+
+The audit engine logic is readable and the recommendations are defensible. However the codebase is a single large `script.js` with no modularization. A real production codebase would split the audit engine, form handling, and UI rendering into separate files. I also didn't ship working automated tests, which is the biggest code quality gap.
 
 ### Design Sense — 8/10
 
-I significantly improved the visual quality of the dashboard and focused on modern UI patterns.
+The dashboard UI is polished, uses consistent spacing and color, renders well on mobile, and the audit results page is screenshot-worthy. The glassmorphism cards and gradient hero section look professional without being over-designed.
 
-### Problem Solving — 8/10
+### Problem Solving — 7/10
 
-I spent time debugging layout and interaction issues independently before finalizing solutions.
+I debugged the undefined summary bug, the broken button listeners on Vercel deployment, and the duplicate dropdown issue independently using console.log and browser DevTools. Where I struggled was with unfamiliar tooling — Jest and GitHub Actions were new to me and I ran out of time to implement them properly.
 
 ### Entrepreneurial Thinking — 7/10
 
-I thought beyond coding by considering product positioning, user acquisition, and business metrics.
+I thought carefully about the lead-gen funnel, the CTA tiers based on savings amount, and the viral share loop. The ECONOMICS.md and GTM.md documents reflect real thinking about unit economics and distribution channels. Where I fell short was not having time to implement the full backend that would make the lead capture actually work end-to-end.
