@@ -2,71 +2,73 @@
 
 ## North Star Metric
 
-Completed AI Spend Audits per Week
+**Qualified leads generated per week** — defined as a completed audit where the user also submitted their email.
 
-This metric directly measures whether users find enough value to complete the full audit flow.
+This is the North Star because it captures both product value (they finished the audit) and business value (Credex has a way to follow up). Raw audit completions don't matter if nobody hands over contact details. Raw email signups don't matter if the audit showed no savings. The intersection is what drives revenue.
 
 ---
 
-## Supporting Metrics
+## Why Not DAU or Weekly Audits Alone
+
+This is a tool people use once or twice — not daily. DAU is the wrong metric for a B2B lead-gen tool with a quarterly use cycle. Weekly audit completions alone don't capture business value. The North Star must reflect both sides of the exchange.
+
+---
+
+## 3 Input Metrics That Drive the North Star
 
 ### 1. Audit Completion Rate
 
-Percentage of users who start the audit and successfully finish it.
+**Definition:** Audits completed ÷ audit forms started  
+**Target:** ≥ 35%  
+**Why it matters:** If users start the form and abandon it, the product is too complex or the value isn't clear enough upfront. Below 25% triggers a redesign of the form flow.
 
-Reason:
-Shows whether the product experience is clear and engaging.
+### 2. Email Capture Rate (Post-Audit)
 
----
+**Definition:** Emails submitted ÷ audits completed  
+**Target:** ≥ 25%  
+**Why it matters:** Users who see their savings number and still don't give an email means the value proposition isn't landing. Below 15% means the results page needs a stronger CTA or the savings numbers aren't compelling enough.
 
-### 2. Email Capture Rate
+### 3. High-Savings Rate
 
-Percentage of completed audits that convert into lead captures.
-
-Reason:
-Measures business value and lead-generation effectiveness.
-
----
-
-### 3. Share Link Usage
-
-Number of users sharing their audit results publicly.
-
-Reason:
-Indicates virality and usefulness of the audit reports.
+**Definition:** Audits showing >$200/mo savings ÷ total audits completed  
+**Target:** ≥ 20%  
+**Why it matters:** The Credex consultation CTA only appears for >$500/mo savings. If too few audits hit that threshold, either the pricing data is wrong, or the tool is attracting users who are already well-optimized. This metric tells us whether the product is reaching the right audience.
 
 ---
-
-### 4. Consultation Conversion Rate
-
-Percentage of high-savings users who click the consultation CTA or book a call.
-
-Reason:
-Measures whether the audit results are persuasive enough to generate qualified business leads.
 
 ## First Instrumentation Priorities
 
-The first analytics events to track would be:
+In order of implementation:
 
-- Audit started
-- Audit completed
-- Email submitted
-- Share link generated
-- Consultation CTA clicked
+1. `audit_started` — user clicks Generate Audit
+2. `audit_completed` — results render on screen
+3. `email_submitted` — lead form submitted successfully
+4. `share_link_generated` — share button clicked
+5. `consultation_cta_clicked` — high-savings CTA clicked
+6. `time_to_complete` — seconds between audit_started and audit_completed
 
----
-
-## Pivot Threshold
-
-If audit completion rate remains below 25% after significant UX improvements, the onboarding flow or audit complexity should be reconsidered.
+Tool: Plausible Analytics (privacy-friendly, no cookie banner needed, $9/mo) or Posthog free tier for funnel analysis.
 
 ---
 
-## Future Metrics
+## Pivot Thresholds
 
-Additional future metrics may include:
+| Metric                      | Current Target        | Pivot If                          |
+| --------------------------- | --------------------- | --------------------------------- |
+| Audit completion rate       | ≥ 35%                 | < 20% after 500 sessions          |
+| Email capture rate          | ≥ 25%                 | < 10% after 200 completions       |
+| High-savings rate           | ≥ 20%                 | < 8% after 300 audits             |
+| Consultation CTA click rate | ≥ 10% of high-savings | < 3% after 50 high-savings audits |
 
-- Recommendation acceptance rate
-- Repeat audit usage
-- Time-to-complete audit
-- Consultation booking conversion
+If audit completion drops below 20%, the hypothesis is the form is too long or asks for too much upfront. Test: collapse to a single-tool audit first, show partial results, then prompt for more tools.
+
+If email capture drops below 10%, the hypothesis is the value shown isn't compelling enough to justify giving an email. Test: show savings number before the email gate, not after.
+
+---
+
+## What Week-1 Success Looks Like
+
+- 300+ audits completed
+- 75+ emails captured
+- 5+ share links generated and clicked by a second user
+- At least 1 consultation CTA click from a >$500/mo savings audit
