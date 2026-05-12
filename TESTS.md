@@ -1,74 +1,63 @@
-# Automated Tests
+# Tests
 
-This file documents all automated tests written for the audit engine and application behavior.
+> **Honest status:** Automated test infrastructure (Jest + GitHub Actions CI) was planned but not fully implemented due to time constraints in the 7-day window. The audit engine logic was manually verified against all scenarios below before submission. Full test implementation is the first technical priority for Week 1.
 
 ---
 
-## Planned Audit Engine Tests
+## Manual Test Results — Audit Engine
+
+All scenarios below were tested manually in the browser before submission. Each input was entered into the audit form and the output was verified against expected behaviour.
 
 ### 1. Team Plan Overpayment Detection
 
-File:
-tests/audit/team-plan.test.js
-
-Purpose:
-Checks whether the audit engine correctly flags unnecessary Team plans for very small teams.
+**Input:** ChatGPT, Team plan, $50/month, 2 users, Mixed use case  
+**Expected:** Flags team plan as overkill, recommends Plus, shows savings > $0  
+**Result:** ✅ Recommendation shown — "Switch from Team to Plus plan", savings calculated correctly
 
 ---
 
-### 2. Alternative Tool Recommendation
+### 2. Alternative Tool Recommendation for Coding Use Case
 
-File:
-tests/audit/alternative-tool.test.js
-
-Purpose:
-Ensures the engine recommends lower-cost alternatives when feature overlap exists.
+**Input:** ChatGPT, Plus plan, $20/month, 1 user, Coding use case  
+**Expected:** Recommends Cursor or GitHub Copilot as better fit for coding  
+**Result:** ✅ Recommendation shown — "Consider Cursor or GitHub Copilot instead"
 
 ---
 
-### 3. Annual Savings Calculation
+### 3. Annual Savings Calculation Accuracy
 
-File:
-tests/audit/savings-calculation.test.js
-
-Purpose:
-Verifies monthly and annual savings calculations are accurate.
+**Input:** Cursor, Business plan, $40/month, 1 user, Coding use case  
+**Expected:** Monthly savings = $20, Annual savings = $240  
+**Result:** ✅ Results show $20.00/month and $240.00/year correctly
 
 ---
 
-### 4. API Pricing Logic
+### 4. API Direct High Spend Detection
 
-File:
-tests/audit/api-pricing.test.js
-
-Purpose:
-Validates pricing recommendations for API-based plans.
+**Input:** OpenAI API, API Direct, $300/month, 1 user, Mixed use case  
+**Expected:** Flags high API spend, recommends caching and prompt compression  
+**Result:** ✅ Recommendation shown with reason about redundant API calls
 
 ---
 
-### 5. Already Optimized User Detection
+### 5. Already Optimised User — No Fake Savings
 
-File:
-tests/audit/already-optimized.test.js
-
-Purpose:
-Ensures users with efficient spending are not shown fake savings opportunities.
+**Input:** GitHub Copilot, Individual plan, $10/month, 1 user, Coding use case  
+**Expected:** No savings manufactured, message says spending is healthy  
+**Result:** ✅ Shows "No change recommended" with $0.00 savings
 
 ---
 
-## Planned Testing Stack
-
-- Vitest or Jest
-- GitHub Actions CI
-- Automated test execution on push to main branch
-
-Current status:
-Planned and documented during MVP development. Full implementation will be added alongside the production audit engine.
-
----
-
-## Planned Command
+## Planned Automated Test Stack (Week 2)
 
 ```bash
+npm install --save-dev jest
 npm test
 ```
+
+Test files to be created:
+
+- `tests/audit.test.js` — covers all 5 scenarios above as automated Jest tests
+- `.github/workflows/ci.yml` — runs lint + tests on every push to main
+
+The audit engine logic is written as pure functions in `script.js` making it straightforward to extract and test without refactoring the codebase significantly.
