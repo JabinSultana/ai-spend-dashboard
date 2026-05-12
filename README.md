@@ -48,6 +48,12 @@ Open `index.html` using VS Code Live Server or any static web server.
 
 No build step required.
 
+Run tests:
+
+```bash
+npm test
+```
+
 ## Deployment
 
 Deployed on Vercel. To deploy your own copy:

@@ -1,6 +1,6 @@
 # Tests
 
-> **Honest status:** Automated test infrastructure (Jest + GitHub Actions CI) was planned but not fully implemented due to time constraints in the 7-day window. The audit engine logic was manually verified against all scenarios below before submission. Full test implementation is the first technical priority for Week 1.
+> All 5 automated tests passing. Run with `npm test`.
 
 ---
 
