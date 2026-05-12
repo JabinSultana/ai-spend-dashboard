@@ -398,24 +398,34 @@ shareBtn.addEventListener("click", () => {
 });
 
 /* Theme Toggle */
-const themeToggle = document.querySelector(".theme-toggle");
-themeToggle.addEventListener("click", () => {
-  document.body.classList.toggle("light-mode");
-  themeToggle.innerHTML = document.body.classList.contains("light-mode")
-    ? "☀️"
-    : "🌙";
-});
+window.addEventListener("DOMContentLoaded", () => {
+  const themeToggle = document.querySelector(".theme-toggle");
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("light-mode");
+      themeToggle.innerHTML = document.body.classList.contains("light-mode")
+        ? "☀️"
+        : "🌙";
+    });
+  }
 
-/* Upgrade Button */
-const upgradeBtn = document.querySelector(".upgrade-btn");
-upgradeBtn.addEventListener("click", () => {
-  alert("🚀 Upgrade plans and premium analytics are coming soon!");
-});
+  /* Upgrade Button */
+  const upgradeBtn = document.querySelector(".upgrade-btn");
+  if (upgradeBtn) {
+    upgradeBtn.addEventListener("click", () => {
+      document
+        .querySelector(".lead-section")
+        .scrollIntoView({ behavior: "smooth" });
+    });
+  }
 
-/* Profile Button */
-const profileBtn = document.querySelector(".profile");
-profileBtn.addEventListener("click", () => {
-  alert("👤 User profile settings will be available in a future update.");
+  /* Profile Button */
+  const profileBtn = document.querySelector(".profile");
+  if (profileBtn) {
+    profileBtn.addEventListener("click", () => {
+      alert("👤 User profile settings will be available in a future update.");
+    });
+  }
 });
 
 /* CTA Buttons */
